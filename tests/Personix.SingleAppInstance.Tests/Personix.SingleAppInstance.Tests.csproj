@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+    <PackageReference Include="Shouldly" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Personix.SingleAppInstance\Personix.SingleAppInstance.csproj" />
+    <!-- Build-only dependency: the cross-process tests launch this helper via Process.Start, they
+         never link against its assembly. -->
+    <ProjectReference Include="..\Personix.SingleAppInstance.TestHost\Personix.SingleAppInstance.TestHost.csproj" ReferenceOutputAssembly="false" />
+  </ItemGroup>
+
+</Project>
+

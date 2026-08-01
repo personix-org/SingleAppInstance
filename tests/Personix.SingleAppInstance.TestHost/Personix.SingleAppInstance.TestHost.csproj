@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Test-only helper. Launched by SingleInstanceGuardCrossProcessTests via Process.Start so that the
+    test suite can prove exclusion holds across real OS process boundaries, not just within one
+    AppDomain. Not packaged, not referenced by the shipped library.
+  -->
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Personix.SingleAppInstance\Personix.SingleAppInstance.csproj" />
+  </ItemGroup>
+
+</Project>

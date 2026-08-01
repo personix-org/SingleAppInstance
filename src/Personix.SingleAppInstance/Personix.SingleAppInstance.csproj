@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <IsPackable>true</IsPackable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PackageId>Personix.SingleAppInstance</PackageId>
+    <AssemblyName>Personix.SingleAppInstance</AssemblyName>
+    <RootNamespace>Personix.SingleAppInstance</RootNamespace>
+    <Version>1.1.5</Version>
+    <Authors>Pavel Kudrna</Authors>
+    <Company>Personix</Company>
+    <Product>Personix.SingleAppInstance</Product>
+    <Description>Enforces that only one instance of an application runs at a time, using a named mutex derived from an application id. Offers both a try pattern and a throwing guard, and releases the mutex deterministically on dispose.</Description>
+    <Copyright>Copyright (c) 2026 Personix</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/personix-org/SingleAppInstance</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/personix-org/SingleAppInstance</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>mutex;single-instance;singleton;process;guard;startup</PackageTags>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
+  </ItemGroup>
+
+</Project>

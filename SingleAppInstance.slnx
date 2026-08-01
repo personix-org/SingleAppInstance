@@ -1,0 +1,21 @@
+<Solution>
+  <Folder Name="/docs/">
+    <File Path="docs\README.md" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src\Personix.SingleAppInstance\Personix.SingleAppInstance.csproj" Type="Classic C#" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests\Personix.SingleAppInstance.Tests\Personix.SingleAppInstance.Tests.csproj" Type="Classic C#" />
+    <!--
+      The test host has to be listed here, not merely referenced from the test project. CI builds the
+      solution in Release and then runs the tests without rebuilding. A project the solution does not
+      name never gets a Release build of its own, so the four cross-process tests go looking for a
+      binary that is not there and fail with FileNotFoundException.
+    -->
+    <Project Path="tests\Personix.SingleAppInstance.TestHost\Personix.SingleAppInstance.TestHost.csproj" Type="Classic C#" />
+  </Folder>
+  <Folder Name="/samples/">
+    <Project Path="samples\Personix.SingleAppInstance.Sample\Personix.SingleAppInstance.Sample.csproj" Type="Classic C#" />
+  </Folder>
+</Solution>
