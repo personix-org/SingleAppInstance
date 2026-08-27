@@ -6,7 +6,8 @@
     <PackageId>Personix.SingleAppInstance</PackageId>
     <AssemblyName>Personix.SingleAppInstance</AssemblyName>
     <RootNamespace>Personix.SingleAppInstance</RootNamespace>
-    <Version>1.1.5</Version>
+    <Version>1.2.0</Version>
+    <PackageReleaseNotes>1.2.0 — adds a net11.0 target alongside net10.0. No API change.</PackageReleaseNotes>
     <Authors>Pavel Kudrna</Authors>
     <Company>Personix</Company>
     <Product>Personix.SingleAppInstance</Product>

@@ -1,7 +1,12 @@
 <Project>
     <!-- See https://aka.ms/dotnet/msbuild/customize for more details on customizing your build -->
     <PropertyGroup>
-        <TargetFramework>net10.0</TargetFramework>
+        <!--
+      Both, so a consumer on either one can take the package. .NET 11 is still preview, and the
+      applications consuming this — production on the mac-mini among them — run on the 10 runtime,
+      so dropping net10.0 would cut them off.
+    -->
+    <TargetFrameworks>net10.0;net11.0</TargetFrameworks>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
