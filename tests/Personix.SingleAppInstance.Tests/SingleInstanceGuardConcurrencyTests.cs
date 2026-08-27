@@ -55,7 +55,7 @@ public class SingleInstanceGuardConcurrencyTests
     public void TryAcquire_RepeatedRealThreadRaces_AlwaysLeaveExactlyOneWinnerAndConsistentBookkeeping()
     {
         // Regression guard for the TOCTOU window that used to exist in TryAcquire: the "do we already
-        // own this mutex" check and the bookkeeping write into `_acquiredMutexes` used to run in two
+        // own this mutex" check and the bookkeeping write into `AcquiredMutexes` used to run in two
         // separate `lock` blocks with the real OS mutex acquire happening in between, so two threads of
         // this process could both pass the check before either had written to the dictionary. Note this
         // does not reproduce an incorrect *result* even on the pre-fix code: the OS mutex was always the
@@ -68,8 +68,8 @@ public class SingleInstanceGuardConcurrencyTests
         // repeatedly, with real OS threads (not the thread pool) released simultaneously, to make the
         // narrow window between a thread starting and it performing its check as easy as possible to hit
         // on any given iteration.
-        var acquiredMutexesField = typeof(SingleInstanceGuard).GetField("_acquiredMutexes", BindingFlags.NonPublic | BindingFlags.Static)
-            ?? throw new InvalidOperationException("SingleInstanceGuard._acquiredMutexes not found by reflection.");
+        var acquiredMutexesField = typeof(SingleInstanceGuard).GetField("AcquiredMutexes", BindingFlags.NonPublic | BindingFlags.Static)
+            ?? throw new InvalidOperationException("SingleInstanceGuard.AcquiredMutexes not found by reflection.");
         var buildMutexNameMethod = typeof(SingleInstanceGuard).GetMethod("BuildMutexName", BindingFlags.NonPublic | BindingFlags.Static)
             ?? throw new InvalidOperationException("SingleInstanceGuard.BuildMutexName(string, SingleInstanceScope) not found by reflection.");
         var acquiredMutexes = (System.Collections.IDictionary)acquiredMutexesField.GetValue(null)!;

@@ -28,8 +28,8 @@ namespace Personix.SingleAppInstance;
 /// </remarks>
 public sealed class SingleInstanceGuard : IDisposable
 {
-    private static readonly Dictionary<string, object> _acquiredMutexes = new();
-    private static readonly object _lock = new();
+    private static readonly Dictionary<string, object> AcquiredMutexes = new();
+    private static readonly object SyncRoot = new();
 
     private readonly MutexOwnerThread _ownerThread;
     private readonly string _mutexName;
@@ -109,7 +109,7 @@ public sealed class SingleInstanceGuard : IDisposable
 
         var mutexName = BuildMutexName(applicationId, scope);
 
-        lock (_lock)
+        lock (SyncRoot)
         {
             // Check whether we already own this mutex in this process, and reserve it for this call in
             // the very same lock as the check. This closes the race where two threads of this process
@@ -119,7 +119,7 @@ public sealed class SingleInstanceGuard : IDisposable
             // or is rolled back in the `finally` below on failure -- including when
             // MutexOwnerThread.Start throws -- so a later attempt for the same application id is never
             // permanently blocked by a reservation that did not pan out.
-            if (!_acquiredMutexes.TryAdd(mutexName, new object()))
+            if (!AcquiredMutexes.TryAdd(mutexName, new object()))
             {
                 guard = null;
                 return false;
@@ -127,7 +127,7 @@ public sealed class SingleInstanceGuard : IDisposable
         }
 
         // Deliberately outside the lock: MutexOwnerThread.Start() hands off to a dedicated background
-        // thread for the real OS-level mutex operation. Holding _lock across that would block every other
+        // thread for the real OS-level mutex operation. Holding SyncRoot across that would block every other
         // TryAcquire/Dispose call in the process -- including for unrelated application ids -- for as
         // long as this one takes, and risks a deadlock if that other call is what would release this one.
         MutexOwnerThread? ownerThread = null;
@@ -140,9 +140,9 @@ public sealed class SingleInstanceGuard : IDisposable
         {
             if (!acquired)
             {
-                lock (_lock)
+                lock (SyncRoot)
                 {
-                    _acquiredMutexes.Remove(mutexName);
+                    AcquiredMutexes.Remove(mutexName);
                 }
             }
         }
@@ -239,9 +239,9 @@ public sealed class SingleInstanceGuard : IDisposable
         // thread-pool thread).
         _ownerThread.ReleaseAndJoin();
 
-        lock (_lock)
+        lock (SyncRoot)
         {
-            _acquiredMutexes.Remove(_mutexName);
+            AcquiredMutexes.Remove(_mutexName);
         }
     }
 

@@ -7,7 +7,7 @@ namespace Personix.SingleAppInstance.Tests;
 /// Proves that SingleInstanceGuard actually excludes across OS process boundaries, which is the one
 /// thing this package promises. Every other guard-vs-guard test in this suite runs inside a single test
 /// process, where a second TryAcquire call for an application id already held is rejected by the
-/// in-process "_acquiredMutexes" bookkeeping before the real named mutex is ever consulted -- so those
+/// in-process "AcquiredMutexes" bookkeeping before the real named mutex is ever consulted -- so those
 /// tests would still pass even if the underlying OS-level mutex logic were completely broken. These
 /// tests launch Personix.SingleAppInstance.TestHost as genuinely separate processes, so only the real
 /// mutex can make them pass.
